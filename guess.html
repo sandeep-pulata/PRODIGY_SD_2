@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guessing Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 400px;
+            width: 100%;
+            margin: 20px;
+            box-sizing: border-box;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333333;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #attempts {
+            font-size: 14px;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        #attemptList {
+            list-style: none;
+            padding: 0;
+        }
+
+        #attemptList li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Guessing Game</h2>
+    <p>Instruction: You have only 10 attempts.</p>
+
+    <p>Guess a number between 1 and 100:</p>
+    <input type="number" id="guessInput" min="1" max="100">
+    <button onclick="checkGuess()">Submit Guess</button>
+    <p id="message"></p>
+    <p id="attempts">Attempts:</p>
+    <ul id="attemptList"></ul>
+</div>
+
+<script>
+    // Generate a random number between 1 and 100
+    var randomNumber = Math.floor(Math.random() * 100) + 1;
+    console.log("Random Number:", randomNumber);
+
+    var attempts = 0;
+
+    // Function to check the user's guess
+    function checkGuess() {
+        attempts++;
+        var guess = parseInt(document.getElementById("guessInput").value);
+
+        if (isNaN(guess) || guess < 1 || guess > 100) {
+            document.getElementById("message").innerText = "Please enter a valid number between 1 and 100.";
+        } else if (guess === randomNumber) {
+            document.getElementById("message").innerText = "Congratulations! You guessed the correct number.";
+        } else if (guess < randomNumber) {
+            document.getElementById("message").innerText = "Too low! Try again.";
+        } else {
+            document.getElementById("message").innerText = "Too high! Try again.";
+        }
+
+        var attemptList = document.getElementById("attemptList");
+        var li = document.createElement("li");
+        li.textContent = `Attempt ${attempts}: ${guess}`;
+        attemptList.appendChild(li);
+
+        if (attempts === 10) {
+            document.getElementById("attempts").innerText = "Attempts (You've reached the maximum attempts):";
+            document.getElementById("attempts").style.color = "red";
+        } else {
+            document.getElementById("attempts").innerText = "Attempts:";
+            document.getElementById("attempts").style.color = "#333333";
+        }
+    }
+</script>
+
+</body>
+</html>
